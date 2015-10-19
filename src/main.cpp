@@ -70,7 +70,7 @@ int main(int argc, char* argv[]){
 
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);
 
-	window = SDL_CreateWindow("Hans.", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
+	window = SDL_CreateWindow("Shadertoy", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL);
 
 	maincontext = SDL_GL_CreateContext(window);
 
