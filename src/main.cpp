@@ -1,6 +1,11 @@
 #define GL_GLEXT_PROTOTYPES
-#include <GL/gl.h>
-#include <GL/glext.h>
+#ifdef __APPLE__
+  #include <OpenGL/gl.h>
+  #include <OpenGL/glext.h>
+#else
+  #include <GL/gl.h>
+  #include <GL/glext.h>
+#endif
 
 #include <SDL2/SDL.h>
 #include <string>
@@ -73,7 +78,7 @@ int compile(std::string fragmentSource){
 	GLuint fragmentShaderIndex = glCreateShader(GL_FRAGMENT_SHADER);
 	const char* fragmentSourceStr = fragmentSource.c_str();
 	int fragmentSourceLen = fragmentSource.length();
-	glShaderSourceARB(fragmentShaderIndex, 1, &(fragmentSourceStr), &(fragmentSourceLen));
+	glShaderSource(fragmentShaderIndex, 1, &(fragmentSourceStr), &(fragmentSourceLen));
 	glCompileShader(fragmentShaderIndex);
 
 	printShaderInfoLog(fragmentShaderIndex);
@@ -121,7 +126,7 @@ void setDynamicUniforms(){
 void loadTextures(){
 	glEnable(GL_TEXTURE_2D);
 	for(int i=0;i<=16;i++){
-		std::string filename = "/home/matt/git/shadertoy/textures/tex"+((i<10)?"0"+std::to_string(i):std::to_string(i))+".bmp";
+		std::string filename = "./textures/tex"+((i<10)?"0"+std::to_string(i):std::to_string(i))+".bmp";
 		SDL_Surface* tex = SDL_LoadBMP(filename.c_str());
 		if(tex){
 			texW[i]=tex->w;
