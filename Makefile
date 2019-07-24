@@ -1,12 +1,20 @@
-CC=g++
-CFLAGS=-I.
-UNAME=$(shell uname)
+CXX      = g++
+CXXFLAGS = -std=c++11 -g
+CPPFLAGS = $(shell pkg-config --cflags SDL2)
+CC       = g++
+LDFLAGS  = -g
+LDLIBS	 = $(shell pkg-config --libs SDL2)
 
+UNAME	 = $(shell uname)
 
-default: src/main.cpp
-	mkdir -p build
 ifeq ($(UNAME), Darwin)
-	$(CC) -std=c++11 -g -o build/shadertoy src/main.cpp -lSDL2 -framework OpenGL
+  LDLIBS += -framework OpenGL
 else
-	$(CC) -std=c++11 -g -o build/shadertoy src/main.cpp -lSDL2 -lGL
+  LDLIBS += -lGL
 endif
+
+shadertoy: shadertoy.o
+shadertoy.o: shadertoy.cpp
+
+clean:
+	rm -f shadertoy shadertoy.o *~
